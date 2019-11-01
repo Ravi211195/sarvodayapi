@@ -4,6 +4,12 @@ const bodyParser = require('body-parser');
 // create express app
 const app = express();
 
+//build your own proxy
+app.use((req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -38,9 +44,6 @@ require('./app/routes/teacher.routes.js')(app);
 require('./app/routes/student.routes.js')(app);
 
 // listen for requests
-// app.listen(3000, () => {
-//     console.log("Server is listening on port 3000");
-// });
 app.set( 'port', ( process.env.PORT || 5000 ));
 
 // Start node server
